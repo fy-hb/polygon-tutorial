@@ -1,3 +1,9 @@
+---
+layout: default
+title: Home
+nav_order: 1
+---
+
 # Polygon：从入门到入门
 
 大概是一份面向新手的 Polygon 算法竞赛出题平台教程。
