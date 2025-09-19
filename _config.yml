@@ -2,4 +2,6 @@ title: title
 description: description
 theme: just-the-docs
 
-url: https://fy-hb.github.io/polygon-tutorial
+# For project sites:
+url: https://fy-hb.github.io
+baseurl: /polygon-tutorial
