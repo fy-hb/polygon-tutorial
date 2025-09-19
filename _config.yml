@@ -2,6 +2,7 @@ title: title
 description: description
 theme: just-the-docs
 
-# For project sites:
 url: https://fy-hb.github.io
 baseurl: /polygon-tutorial
+
+math: mathjax
