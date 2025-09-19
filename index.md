@@ -1861,16 +1861,7 @@ $$
 
 然后我们会发现，题面爆炸了。
 
-原因处在样式宏包 `olymp.sty` 中的这段代码。它会和 hyperref 宏包发生冲突了：
-
-```tex
-%---------- From package "lastpage" ------------------
-\def\lastpage@putlabel{\addtocounter{page}{-1}%
-   \immediate\write\@auxout{\string\newlabel{LastPage}{{}{\thepage}}}%
-   \addtocounter{page}{1}}
-\AtEndDocument{\clearpage\lastpage@putlabel}%
-%---------- end of "lastpage" ------------------
-```
+原因在样式宏包 `olymp.sty` 中，定义 ```\LastPage``` 的一段代码，会和 hyperref 宏包发生冲突。
 
 解决方法是，加上 ```\usepackage {lastpage}``` 即可。lastpage 宏包在提供 ```\LastPage``` 宏的同时，可以解决与 hyperref 的冲突问题。加上之后即可正常构建 pdf。
 
