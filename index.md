@@ -8,6 +8,25 @@ toc_sticky: true
 
 大概是一份面向新手的 Polygon 算法竞赛出题平台教程。
 
+# 写在前面
+
+Polygon 是一个自动化程度相当高的算法竞赛出题平台。在开始之前，先简单聊一聊 Polygon 能帮我们干一些什么事情。
+
+- 在 Polygon 上，你可以很方便的进行多人协作。你可以创建 Contest Groups，将题目的权限共享给出题组的其他人，互相之间帮对方修改题面、加数据、加 Solution。
+- 在 Polygon 上，你只需要负责输入数据。Polygon 会自动帮你用 std 产生对应的输出数据。
+- 在 Polygon 上，你可以编写 Validator，用于进行输入数据合法性的检验。编写正确的 Validator 可以有效防止错误数据的出现：比如一行输入 $$n$$ 个数，但是实际只有 $$n-1$$ 个；输入保证是凸包，但是数据中出现了凹包；输入格式要求 $$a_i \geq 1$$，但是数据中出现了 $$0$$。
+- 你可以将单个题目（亦或是整场比赛的题目）导出为一个 Package，随后导入其他评测系统。CCPCOJ 目前已经支持导入 Polygon Package，对于 DOMJudge，你可以使用 [Polygon2DOMjudge](https://github.com/cn-xcpc-tools/Polygon2DOMjudge) 转换为 DOMJudge 支持的 Package 格式。
+
+以下内容摘自 OI-WIKI：
+
+- 有版本管理系统，多人合作时不会乱成一团，也不需要互相传文件。
+- 出题系统完善，Validator、Generator、Checker、Solutions 环环相扣，输出自动生成。
+- 可以为 Solutions 设置标签，错解 AC、正解未 AC 都会警告，方便地逐一卡掉错解。
+- 可以方便地对拍，拍出来的数据可以直接添加到题目数据中。
+- 发现问题可以提 issue，而不会被消息刷屏却一直没有 fix。
+- 为日后出 CF 做准备。
+- $$\ldots$$
+
 ## 可能有用的链接
 
 Polygon 平台：[https://polygon.codeforces.com/](https://polygon.codeforces.com/)
@@ -29,25 +48,6 @@ Codeforces authors guide：[https://codeforces.com/r/authors-guide](https://code
 Codeforces Authors' Polygon Rules：[https://codeforces.com/r/authors-polygon-rules](https://codeforces.com/r/authors-polygon-rules)
 
 洛谷题面规范：[https://help.luogu.com.cn/rules/academic/problem-standard](https://help.luogu.com.cn/rules/academic/problem-standard)
-
-# 写在前面
-
-Polygon 是一个自动化程度相当高的算法竞赛出题平台。在开始之前，先简单聊一聊 Polygon 能帮我们干一些什么事情。
-
-- 在 Polygon 上，你可以很方便的进行多人协作。你可以创建 Contest Groups，将题目的权限共享给出题组的其他人，互相之间帮对方修改题面、加数据、加 Solution。
-- 在 Polygon 上，你只需要负责输入数据。Polygon 会自动帮你用 std 产生对应的输出数据。
-- 在 Polygon 上，你可以编写 Validator，用于进行输入数据合法性的检验。编写正确的 Validator 可以有效防止错误数据的出现：比如一行输入 $$n$$ 个数，但是实际只有 $$n-1$$ 个；输入保证是凸包，但是数据中出现了凹包；输入格式要求 $$a_i \geq 1$$，但是数据中出现了 $$0$$。
-- 你可以将单个题目（亦或是整场比赛的题目）导出为一个 Package，随后导入其他评测系统。CCPCOJ 目前已经支持导入 Polygon Package，对于 DOMJudge，你可以使用 [Polygon2DOMjudge](https://github.com/cn-xcpc-tools/Polygon2DOMjudge) 转换为 DOMJudge 支持的 Package 格式。
-
-以下内容摘自 OI-WIKI：
-
-- 有版本管理系统，多人合作时不会乱成一团，也不需要互相传文件。
-- 出题系统完善，Validator、Generator、Checker、Solutions 环环相扣，输出自动生成。
-- 可以为 Solutions 设置标签，错解 AC、正解未 AC 都会警告，方便地逐一卡掉错解。
-- 可以方便地对拍，拍出来的数据可以直接添加到题目数据中。
-- 发现问题可以提 issue，而不会被消息刷屏却一直没有 fix。
-- 为日后出 CF 做准备。
-- $$\ldots$$
 
 # 基本使用
 
@@ -1410,9 +1410,7 @@ Properties/Files 可以编辑题目的题面模板文件（`olymp.sty`、`statem
 
 有关比赛/题目集的内容不多。各位自行摸索一下即可。
 
-之后简单讲一些技巧。
-
-## 技巧
+## 一些技巧
 
 ### Contest Group
 
