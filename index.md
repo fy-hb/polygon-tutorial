@@ -1,13 +1,10 @@
 ---
-layout: minimal
-title: Home
-nav_order: 1
-has_toc: true
-usemathjax: true
-usetocbot: true
+title: Polygon：从入门到入门
+layout: single
+author_profile: true
+toc: true
+toc_sticky: true
 ---
-
-# Polygon：从入门到入门
 
 大概是一份面向新手的 Polygon 算法竞赛出题平台教程。
 
@@ -121,8 +118,8 @@ Tags 一栏，你可以为题目添加 Tag，用于说明这个题目用在了�
 
 ![](img/create_statements.png)
 
-{: .note }
 > 如果你需要去 Codeforces 上拉 mashup 来验题（或者是赛后要上 gym）的话，不管实际语言是什么，此处都建议选择 `English`。
+{: .notice--info}
 
 Codeforces 的题目渲染存在一个奇怪特性。只要你选择的不是英文或是俄文，将题目导入 Codeforces 之后，题面数学公式将无法正常渲染。具体情况可能如图。
 
@@ -162,8 +159,8 @@ Polygon 也具有类似 git 的版本管理机制。虽然细节上不一定足�
 
 ![](img/modified_files.png)
 
-{: .note }
 > 建议每做完一个阶段的修改，都进行一次 commit。
+{: .notice--info}
 
 点击右下角的 `Commit Changes`，即可编辑 Commit Message 并**正式提交**所有的修改。
 
@@ -233,13 +230,13 @@ Polygon 也具有类似 git 的版本管理机制。虽然细节上不一定足�
 
 在开始之前，我们先讲一讲 Generator 应当遵守的范式。
 
-{: .highlight }
 > Generator 可以追求一定的复用性。我们可以通过传递不同的参数，来让一个 Generator 生成多组不同的数据。
+{: .notice--info}
 
 比如可以让我们的 Generator 具有如下行为：我们用 `./gen-rand -n 10` 可以生成一组 $$n = 10$$ 的数据，改成 `./gen-rand -n 99` 从而生成一组 $$n = 99$$ 的数据。
 
-{: .highlight }
 > Generator 的行为应当是可复现的。你在任何时间、任何处理器架构、任何操作系统上，只要是同一个 Generator 和相同的参数，都应当得到相同的一组数据。
+{: .notice--info}
 
 有些输入量极大的题，单组输入数据可能动辄十几 MB，总共加起来可能要突破若干 GB。只要 Generator 的行为是可复现的，我们记下 Generator 的代码以及我们用到的参数，就相当于存下了这组数据。因为我们可以在任何时候由此将数据造出来。而造出来的数据，就属于用完就可以删的东西了。
 
@@ -450,8 +447,8 @@ Validator 也是一个相当重要的工具。它用于检验所有的输入数�
 
 并且 Codeforces Authors' Polygon Rules 也推荐你这么做：
 
-{: .highlight }
 > Use array-reading functions ```read*s(n,...)``` instead of loops whenever possible.
+{: .notice--info}
 
 这样做除了方便还有一个好处：如果其中有数字超出了范围，testlib 会通过错误信息告诉你是第几个数超出了范围。例如如下错误信息：
 
@@ -461,8 +458,8 @@ FAIL Integer element a[2] equals to 1000000001, violates the range [-10^9, 10^9]
 
 我们很容易知道，是序列 $$a$$ 的第 $$2$$ 个数超出了范围。
 
-{: .note }
 > 在 Validator 中，所有的不可见字符都需要显式的写上对应的读入语句，从而保证输入数据的格式是完全正确的。
+{: .notice--info}
 
 具体的，你需要用 `inf.readEoln();` 语句去读换行符，用 `inf.readSpace();` 去读空格，用 `inf.readEof();` 去读文件结尾。
 
@@ -759,8 +756,8 @@ abc def hahaha
 
 在需要 Special Judge（也就是一个题可能有多种满足要求的输出）的题目中，我们可能需要手写自定义的 Checker 来验证选手输出的正确性。
 
-{: .warning }
 > 永远不要信任选手程序的输出；同时，也要在编写 Checker 的时候预防好 std 可能出错的情况。
+{: .notice--warning}
 
 我们依旧是使用 testlib 库进行 Checker 的编写。
 
@@ -861,10 +858,10 @@ int main(int argc, char *argv[]) {
 - `ouf`：读取选手输出
 - `ans`：读取 std 输出
 
-{: .note }
 > 在 Checker 运行之前，Validator 是已经运行过的。请不要在 Checker 中对输入数据进行额外合法性检查。
 > 
 > 同时请不要用 `inf.readSpace` 等函数去读输入或是输出数据中的空白字符。
+{: .notice--info}
 
 比如输入数据保证 $$x \neq y$$ 的话，你正常把 x 和 y 读入进来即可，额外写 `ensuref` 判断 x 是否等于 y 是没有意义的。
 
@@ -883,8 +880,8 @@ Codeforces Authors' Polygon Rules 要求，自定义 Checker 必须遵循 [readA
 - ```_wa```（WRONG_ANSWER）：表示输出被判定为错误。
 - ```_fail```（CRASHED）：表示评测出错，也即 Judgement Failed。
 
-{: .warning }
 > 对于多测的情况，务必记得不要提前返回 ```_ok```。
+{: .notice--warning}
 
 在编写 Checker 的时候，如果出现「std 输出不合法」、「选手程序输出优于 std 输出」或者是「std 没有找到解但是选手程序找到了」等 std 出现错误的情况，请务必保证结果是 CRASHED。在大部分平台上（包括但不限于 Codeforces、DOMJudge 等），这一评测结果都会以**相当醒目**的方式通知到出题组，告诉出题组这道题出锅了。
 
@@ -1036,15 +1033,15 @@ int main(int argc, char *argv[]) {
 times: 4
 ```
 
-{: .warning }
 > 通过 cout 向选手程序输出内容后，也请记得刷新输出缓冲区。否则选手程序将无法读到内容。
+{: .notice--warning}
 
 在交互题中，只要有一方没有读到对方的东西，都会触发 IDLENESS_LIMIT_EXCEEDED
 
 在 Codeforces 以及 Polygon 平台上，当交互器工作结束后，Checker 会开始工作，并检查输出数据中的内容是否符合要求。也就是说，交互器和 Checker 都有资格返回 WA，只有他们俩都顺利运行结束，结果才会是 AC。
 
-{: .warning }
 > 为了兼容性考虑，建议将所有的判断 WA 的逻辑放在交互器内。不少平台（比如 DOMJudge）没有最后的 Checker 检查输出数据这一步。
+{: .notice--warning}
 
 ### 有关题目的其他部分
 
@@ -1293,11 +1290,11 @@ Polygon 还会去检验你的 Checker 是否会在奇怪刁钻输出上出错。
 - 运行 Generator 并产生所有输入数据，之后使用 Validator 进行检验。
 - 运行 std 并产生所有输出数据，之后使用 Checker 进行检验。
 
-{: .warning }
 > 需要注意，Standard Package 产生的测试数据中，行尾标识符将全是 Windows 风格的 CRLF（也即 ```\r\n```），而非 Unix 风格的 LF（也即 ```\n```）。
+{: .notice--warning}
 
-{: .warning }
 > 在 linux 评测环境中，```\r\n``` 极有可能会对正常的评测产生干扰，比如用 cin 读一个字符串的时候，额外读到一个 ```\r```。如果评测环境是 linux，并且需要使用 Standard Package 造出来的数据，请通过 `dos2unix` 等工具进行转换。或者使用下文提到的 Linux Package。
+{: .notice--warning}
 
 并且需要注意，即便你是在 linux 环境中使用 doall.sh 产生所有数据，所有文件的行尾标识符也依旧会是 CRLF 而非 LF。
 
@@ -1388,8 +1385,8 @@ Windows Package 与上述的 Standard Package 几乎没有区别，只是把所�
     └── 18.a
 ```
 
-{: .note }
 > 在 Linux Package 的测试数据中，所有的行尾标识符均是 LF（也即 ```\n```）。
+{: .notice--info}
 
 # 创建比赛/题目集
 
@@ -1415,6 +1412,8 @@ Properties/Files 可以编辑题目的题面模板文件（`olymp.sty`、`statem
 
 之后简单讲一些技巧。
 
+## 技巧
+
 ### Contest Group
 
 如果出题组需要合作出多场比赛的话，可以点击页面最上方 `View Contest Groups`，创建一个 Contest Group，将相关人员拉进来，然后把要出的比赛挂在底下。这样可以便于进行权限的管理。
@@ -1427,8 +1426,8 @@ Polygon 上的比赛可以很方便的一键导入 Codeforces。
 
 ![](img/give_codeforces_read_access.png)
 
-{: .note }
 > 如果你担心把 codeforces 打错，别忘了 Polygon 的域名是 polygon.codeforces.com。你可以从这里复制。
+{: .notice--info}
 
 之后我们可以回到 Codeforces 本站。在 gym 页面，点击 mashup 选项，即可找到 Create new mashup 的入口。
 
@@ -1458,8 +1457,8 @@ Duration 按照实际需求填写即可。但是不能为空。
 
 # 构建题面 pdf
 
-{: .note }
 > 遇到实在无法解决的问题，请考虑将 Package 下载到本地，并使用 XeLaTeX 等更加现代的引擎进行题面的构建。
+{: .notice--info}
 
 在 Statements 页面，有一个选项叫做 `In PDF`，其作用是使用 LaTeX 构建一份该题目的 pdf 文件。
 
@@ -1785,8 +1784,8 @@ $$
 \end {document}
 ```
 
-{: .warning }
 > 截至在本文刚写完的时候，Polygon 的题面构建功能似乎出现了一些 bug。所有涉及到改变字体指定的包（包括 CJK 和 ctex），都会导致最终产生的 PDF 出现字体问题。具体情况可以参照[这篇博客](https://codeforces.com/blog/entry/146531)。对于有需要的情况，请考虑参照下文“本地构建”一章所讲的内容，本地进行构建。
+{: .notice--warning}
 
 ### lstlisting 样式
 
@@ -2030,7 +2029,7 @@ $$
 
 在你写题面的时候，如果你想正常使用井号这个字符，请在前面加上反斜杠。
 
-#### & 符号
+#### 与
 
 LaTeX 中，& 符号主要是用于在表格以及数学公式中的矩阵等环境中进行列之间的对齐。
 
