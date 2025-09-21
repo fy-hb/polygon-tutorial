@@ -1,7 +1,10 @@
 ---
-layout: default
+layout: minimal
 title: Home
 nav_order: 1
+has_toc: true
+usemathjax: true
+usetocbot: true
 ---
 
 # Polygon：从入门到入门
@@ -278,7 +281,7 @@ int main(int argc, char *argv[]) {
 
 这里的 ```opt<XXX>``` 是 testlib 提供的用于获取参数的接口。
 
-假设我们用编译好的可执行文件叫做 `gen-rand`，我们执行 `./gen-rand -n 10 -minv -100 -maxv 100` 这一命令，这样一来，在程序内部，$$n$$ 将被赋值为 $10$，$minv$ 将被赋值为 $-100$，以此类推。
+假设我们用编译好的可执行文件叫做 `gen-rand`，我们执行 `./gen-rand -n 10 -minv -100 -maxv 100` 这一命令，这样一来，在程序内部，$$n$$ 将被赋值为 $$10$$，$$minv$$ 将被赋值为 $$-100$$，以此类推。
 
 ```opt<XXX>``` 的第二个输入参数是该变量的默认取值。比如代码中的 ```int minv = opt<int> ("minv", -1'000'000'000);```，如果你没有提供命令参数 ```minv```，那么 $$minv$$ 的默认取值就是 $$-10^9$$。
 
