@@ -1,7 +1,7 @@
 ---
 title: Polygon：从入门到入门
-layout: single
-author_profile: true
+layout: custom
+author_profile: false
 toc: true
 toc_sticky: true
 ---
