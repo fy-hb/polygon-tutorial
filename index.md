@@ -2081,4 +2081,3 @@ Use $s = \mathtt{abacaba}$ to denote string constants in formulas, and \texttt{a
 ```tex
 $\verb|"rwx"|$ 分别代表读入权限、写入权限和执行权限，如果没有其中某个权限则会代替为 $\verb|"-"|$，例如只有读入权限没有写入和执行权限为 $\verb|"r--"|$。
 ```
-
