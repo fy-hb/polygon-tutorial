@@ -145,7 +145,7 @@ Polygon 的题面编写使用的是 LaTeX 语法。常用语法可以点击旁�
 - `Output`：输出格式
 - `Notes`：样例说明等其他补充说明
 
-对于中文题面，可以参考洛谷题面规范，以及牛客/洛谷的近期比赛题目进行编写（不建议参考洛谷早期题库题目，也不建议参考牛客主题库的题目，其中题面乱写或是不规范的太多了）。
+对于中文题面，可以参考[洛谷题面规范](https://help.luogu.com.cn/rules/academic/problem-standard)，以及牛客/洛谷的近期比赛题目进行编写（不建议参考洛谷早期题库题目，也不建议参考牛客主题库的题目，其中题面乱写或是不规范的太多了）。
 
 编辑完成后，点击下方 `Save` 保存即可。
 
@@ -207,6 +207,9 @@ Polygon 也具有类似 git 的版本管理机制。虽然细节上不一定足�
 | Incorrect                                    | 所有 AC 不了的代码都可以标记成这一类。只要上述标签有可以使用的，那么请使用上述的更加具体的标签，而不是这个。除非这个代码真的无法归类。 |      |
 
 ## 测试数据
+
+> 在输入/输入中，除去空格以及行尾标识符，请务必尽可能只使用 ascii 码范围内的可见字符。
+{: .notice--info}
 
 接下来，在 Tests 页面，我们可以添加测试数据。我们可以先手造一些小数据，点击 `Add Test` 进行添加。
 
@@ -417,7 +420,7 @@ int main(int argc, char *argv[]) {
 
 不建议叫做 `gen1`、`gen2`，否则过一段时间你就会忘了它是做什么的。
 
-Codeforces Authors' Polygon Rules 推荐我们使用 `gen_path`、`gen_binary` 等意义明确的名称。
+[Codeforces Authors' Polygon Rules](https://codeforces.com/r/authors-polygon-rules) 推荐我们使用 `gen_path`、`gen_binary` 等意义明确的名称。
 
 ![](img/generator_name_suggest.png)
 
@@ -445,7 +448,7 @@ Validator 也是一个相当重要的工具。它用于检验所有的输入数�
 
 只要是一行 $$n$$ 个数的情形，最好都使用 ```inf.read*s()``` 去一次读完，而不是写一个 for 循环挨个读取。
 
-并且 Codeforces Authors' Polygon Rules 也推荐你这么做：
+并且 [Codeforces Authors' Polygon Rules](https://codeforces.com/r/authors-polygon-rules) 也推荐你这么做：
 
 > Use array-reading functions ```read*s(n,...)``` instead of loops whenever possible.
 {: .notice--info}
@@ -678,7 +681,7 @@ Checker 的作用是，根据**输入数据、std 输出，选手程序输出**�
 
 对于输出是一堆 long long 范围内整数的情况，我们直接选择 `std::ncmp.cpp` 即可。
 
-顺带一题，Codeforces Authors' Polygon Rules 推荐在可能的情况下，优先选择 `std::ncmp.cpp`、`std::nyesno.cpp` 以及 `std::wcmp.cpp`。
+顺带一题，[Codeforces Authors' Polygon Rules](https://codeforces.com/r/authors-polygon-rules) 推荐在可能的情况下，优先选择 `std::ncmp.cpp`、`std::nyesno.cpp` 以及 `std::wcmp.cpp`。
 
 ![](img/cf_polygon_rules_checker.png)
 
@@ -865,7 +868,7 @@ int main(int argc, char *argv[]) {
 
 比如输入数据保证 $$x \neq y$$ 的话，你正常把 x 和 y 读入进来即可，额外写 `ensuref` 判断 x 是否等于 y 是没有意义的。
 
-Codeforces Authors' Polygon Rules 要求，自定义 Checker 必须遵循 [readAns 范式](https://codeforces.com/blog/entry/18431)。具体的：
+[Codeforces Authors' Polygon Rules](https://codeforces.com/r/authors-polygon-rules) 要求，自定义 Checker 必须遵循 [readAns 范式](https://codeforces.com/blog/entry/18431)。具体的：
 
 - 你需要实现一个叫做 `readAns(XXX)` 的函数，传入参数包括 `InStream&`（`ouf` 以及 `ans` 都是 `InStream` 类的实例），负责读取输出并检验输出本身的合法性。
 - 在 main 函数内，你需要依次进行（如果是多测的话，对于每组测试用例依次进行）：通过 `inf.readXXX` 读取输入数据，之后分别调用 `readAns(ans)` 与 `readAns(ouf)`，读取 std 输出与选手程序输出。
@@ -1084,7 +1087,7 @@ times: 4
 
 ### 有关结构设计，输入数据与输出数据
 
-总的来说，交互器的写法是相当自由的，输入数据与输出数据放些什么，也全看你怎么设计。并且 Codeforces Authors' Polygon Rules 也没有像 Checker 那样详细规定你交互题应该怎么出。
+总的来说，交互器的写法是相当自由的，输入数据与输出数据放些什么，也全看你怎么设计。并且 [Codeforces Authors' Polygon Rules](https://codeforces.com/r/authors-polygon-rules) 也没有像 Checker 那样详细规定你交互题应该怎么出。
 
 上面所讲的例题，交互器是非适应性（non-adaptive）的。也就是说，要猜的答案（$$k$$），是事先确定好的（提前放在了输入数据里，在交互开始之前从里面读）。
 
@@ -2059,7 +2062,7 @@ $$
 
 ![](img/use_quotes.png)
 
-如果要表示某个字符串，Codeforces Authors' Polygon Rules 是不推荐你加引号的，而是仅使用 ```texttt```（在数学环境中是 ```mathtt```）来包裹字符串的内容：
+如果要表示某个字符串，[Codeforces Authors' Polygon Rules](https://codeforces.com/r/authors-polygon-rules) 是不推荐你加引号的，而是仅使用 ```texttt```（在数学环境中是 ```mathtt```）来包裹字符串的内容：
 
 ```tex
 Use $s = \mathtt{abacaba}$ to denote string constants in formulas, and \texttt{abacaba} outside formulas. No need for quotation marks.
