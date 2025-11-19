@@ -1458,8 +1458,8 @@ Duration 按照实际需求填写即可。但是不能为空。
 
 # 构建题面 pdf
 
-> 遇到实在无法解决的问题，请考虑将 Package 下载到本地，并使用 XeLaTeX 等更加现代的引擎进行题面的构建。
-{: .notice--info}
+> 截至在本文刚写完的时候，Polygon 的题面构建功能出现了 bug。所有涉及到改变字体指定的包（包括 CJK 和 ctex），都会导致最终产生的 PDF 出现字体问题。具体情况可以参照[这篇博客](https://codeforces.com/blog/entry/146531)。建议先修改完模板文件之后，参照下文“本地构建”一章所讲的内容，本地进行构建。
+{: .notice--warning}
 
 在 Statements 页面，有一个选项叫做 `In PDF`，其作用是使用 LaTeX 构建一份该题目的 pdf 文件。
 
@@ -1468,6 +1468,8 @@ Duration 按照实际需求填写即可。但是不能为空。
 Polygon 使用 pdfLaTeX 引擎进行题面的构建。pdfLaTeX 对大部分 ascii 之外的字符，支持都不是很好。包括中文。因此在默认情况下，你在 Statements 页面点击 `In PDF`，只会看到由于中文字符而引起的错误。
 
 如果你不想看后面的一大段文字，这里先放出一个修改版的 `statements.ftl` 文件。在 Files 页面将 `statements.ftl` 修改替换后，即可正常构建题面 pdf。
+
+或者也可以直接使用 [这个仓库](https://github.com/fy-hb/polygon-chinese-template) 中的模板文件。相比于原版做出了更多的修改。
 
 ```tex
 \documentclass [11pt, a4paper, oneside] {article}
@@ -1785,8 +1787,6 @@ $$
 \end {document}
 ```
 
-> 截至在本文刚写完的时候，Polygon 的题面构建功能似乎出现了一些 bug。所有涉及到改变字体指定的包（包括 CJK 和 ctex），都会导致最终产生的 PDF 出现字体问题。具体情况可以参照[这篇博客](https://codeforces.com/blog/entry/146531)。对于有需要的情况，请考虑参照下文“本地构建”一章所讲的内容，本地进行构建。
-{: .notice--warning}
 
 ### lstlisting 样式
 
@@ -1894,6 +1894,34 @@ $$
 
 ## 其他技巧
 
+### 汉化
+
+如果你希望把「Input」、「Output」等字样改为中文，可以参照 [这个仓库](https://github.com/fstqwq/polygon-chinese-template) （或 [本人修改过的版本](https://github.com/fy-hb/polygon-chinese-template)），将对应模板文件进行替换即可。
+
+### 页眉格式
+
+如果你需要如下风格的页眉
+
+![](./img/odd_head.png)
+
+对 ```plymp.sty``` 中，```\renewcommand{\@oddhead}``` 开始的相关部分进行修改即可。
+
+```tex
+\renewcommand{\@oddhead}{
+    \ifdefined\thecontestname
+        \parbox{\textwidth}{
+            \begin{center}
+                \protect\begin{tabular}{lr}
+                    \raggedright \thecontestname & \raggedleft \thecontestdate
+                \end{tabular}
+                \\[2pt]
+                \hrule
+            \end{center}
+        }
+    \fi
+}
+```
+
 ### 样例放不下
 
 如果遇到样例一行包含太多东西，导致溢出的情况：
@@ -1937,14 +1965,22 @@ $$
 
 ### 本地构建比赛 PDF
 
-首先需要将比赛的 Package 下载到本地。
+首先将比赛的 Package 下载到本地。
 
-之后找到 ```/statements/语言/doall.sh```，将其中的 ```latex statements.tex``` 以及往下的语句全部删掉。
+之后找到 ```statements/语言/doall.sh```，将其中的 ```latex statements.tex``` 以及往下的语句全部删掉。
 
 在此之后，有两种方式。
 
-1. 加上 ```xelatex -synctex=1 statements.tex```。这样，在运行 ```doall.sh``` 时，即可自动用 XeLaTeX 完成题面 PDF 的构建。
-2. 先运行 ```doall.sh```。之后用本地的 LaTeX IDE 打开 ```statements.tex``` 文件，并进行构建。
+第一种是先运行 ```doall.sh```。之后用本地的 LaTeX IDE 打开 ```statements.tex``` 文件，并进行构建。
+
+第二种是在文件最后加上
+
+```sh
+xelatex -synctex=1 -interaction=nonstopmode statements.tex
+xelatex -synctex=1 -interaction=nonstopmode statements.tex
+```
+
+之后运行 ```doall.sh```  即可完成构建。
 
 ### 比赛题目集的封面
 
@@ -2008,11 +2044,111 @@ $$
 % 后面保持不变
 ```
 
-其中我们用到了 `statements-logo.png` 这个文件。这个文件需要在比赛 Properties/Files 页面中进行上传。Polygon 要求比赛题面过程中需要用到的额外文件，必须叫做 `statements-XXXX`。以下是构建出来的效果。
+其中我们用到了 `statements-logo.png` 这个文件。这个文件需要在比赛 Properties/Files 页面中进行上传。Polygon 要求比赛题面构建过程中需要用到的额外文件，必须叫做 `statements-XXXX`。以下是构建出来的效果。
 
 ![](img/contest_statements_cover.png)
 
 通过 LaTeX 来写封面，可能相对来说没那么容易。因此更建议的做法还是第一种。
+
+### TOC
+
+如果希望自动生成一份比赛题目的 table of contents，可以采用如下方式：
+
+在 ```statements.ftl``` 的导言区添加如下内容：
+
+```tex
+\usepackage {booktabs}
+
+\def\problemtoc{}
+
+\makeatletter
+\newcommand{\addproblemtoc}[2]{\gappto\problemtoc{#1 & #2 \\}}
+
+\makeatletter
+\newcommand{\addtitletoproblemtoc}[2]{
+\protected@write\@auxout{}{\string\addproblemtoc{#1}{#2}}
+}
+
+\makeatletter
+\newcommand{\makeproblemtoc}{
+\begin{center}
+\begin{tabular}{rl}
+\toprule
+题号 & 题目名称 \\
+\midrule
+\problemtoc
+\bottomrule
+\end{tabular}
+\end{center}
+}
+```
+
+- 首先需要在每题开始的地方调用 ```\addtitletoproblemtoc``` 命令。
+- 之后，在标题页的对应位置添加 ```\makeproblemtoc``` 命令即可。
+
+关于第一点，我们可以通过对 ```olymp.sty``` 进行修改从而实现。
+
+```tex
+\newenvironment{@problem}[6]{
+\global\let\lastproblemauthor\thisproblemauthor
+\global\let\lastproblemdeveloper\thisproblemdeveloper
+\global\let\lastproblemorigin\thisproblemorigin
+
+% 这里增加内容
+\ifdefined\addtitletoproblemtoc
+  \addtitletoproblemtoc{\ProblemIndex}{#1}
+\fi
+```
+
+示例：
+
+```tex
+\begin {document}
+
+% 以下是题目标题页的示例
+
+\title{\textbf{\Huge{${contest.name!}}}}
+\date{${contest.date!}}
+\author{${contest.location!}}
+\maketitle
+
+\begin{center}
+\includegraphics[width=3in]{statements-logo.png}
+\end{center}
+
+\vspace{2.5em}
+
+\begin{center}
+\Large
+
+\makeproblemtoc
+
+\vspace{1em}
+
+\Large \textbf{请勿在比赛正式开始前打开题面！}
+\end{center}
+\thispagestyle{empty}
+
+\clearpage
+\phantom{s}
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\clearpage
+
+% 以下不变
+
+\contest
+{${contest.name!}}%
+{${contest.location!}}%
+{${contest.date!}}%
+
+% ......
+```
+
+![](./img/auto_toc.png)
+
+完整示例可以参照 [这个仓库](https://github.com/fy-hb/polygon-chinese-template)。
 
 ## 若干题面 pdf 构建失败原因
 
