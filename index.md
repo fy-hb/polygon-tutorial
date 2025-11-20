@@ -2217,3 +2217,7 @@ Use $s = \mathtt{abacaba}$ to denote string constants in formulas, and \texttt{a
 ```tex
 $\verb|"rwx"|$ 分别代表读入权限、写入权限和执行权限，如果没有其中某个权限则会代替为 $\verb|"-"|$，例如只有读入权限没有写入和执行权限为 $\verb|"r--"|$。
 ```
+
+#### 部分 MathJax 扩展
+
+在 Polygon 的 Edit with Preview 功能中，你可以正常使用 ```\lt``` 表示小于号（或者 ```\gt``` 表示大于号）。但是它其实是 MathJax（也就是网页上的 LaTeX 公式渲染引擎）扩展，而非标准 LaTeX 语法。如有需要，请直接使用小于号（或大于号）。
