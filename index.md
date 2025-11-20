@@ -1911,9 +1911,9 @@ $$
     \ifdefined\thecontestname
         \parbox{\textwidth}{
             \begin{center}
-                \protect\begin{tabular}{lr}
-                    \raggedright \thecontestname & \raggedleft \thecontestdate
-                \end{tabular}
+                \protect\begin{tabular*}{0.96\textwidth}{@{} l @{\extracolsep{\fill}} r @{}}
+                     \thecontestname & \thecontestdate
+                \end{tabular*}
                 \\[2pt]
                 \hrule
             \end{center}
