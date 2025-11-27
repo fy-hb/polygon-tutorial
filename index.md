@@ -2052,6 +2052,10 @@ xelatex -synctex=1 -interaction=nonstopmode statements.tex
 
 ### TOC
 
+（这一部分参考了 初梦 大佬的实现 [https://github.com/lihaoze123/polygon-chinese-template](https://github.com/lihaoze123/polygon-chinese-template)）
+
+（与之不同的是，我将注册题目标题放在了 `olymp.sty` 的 `problem` 环境定义中，这样可以不用修改每个题的 `problem.tex`）
+
 如果希望自动生成一份比赛题目的 table of contents，可以采用如下方式：
 
 在 ```statements.ftl``` 的导言区添加如下内容：
