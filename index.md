@@ -2058,7 +2058,7 @@ xelatex -synctex=1 -interaction=nonstopmode statements.tex
 
 如果希望自动生成一份比赛题目的 table of contents，可以采用如下方式：
 
-在 ```statements.ftl``` 的导言区添加如下内容：
+在 ```statements.ftl``` 的导言区或者是 `olymp.sty` 的内部添加如下内容：
 
 ```tex
 \usepackage {booktabs}
@@ -2086,6 +2086,8 @@ xelatex -synctex=1 -interaction=nonstopmode statements.tex
 }
 ```
 
+（在 `olymp.sty` 内部添加记得去掉 `makeatletter` 以及 `makeatother`）
+
 - 首先需要在每题开始的地方调用 ```\addtitletoproblemtoc``` 命令。
 - 之后，在标题页的对应位置添加 ```\makeproblemtoc``` 命令即可。
 
@@ -2098,7 +2100,7 @@ xelatex -synctex=1 -interaction=nonstopmode statements.tex
 \global\let\lastproblemorigin\thisproblemorigin
 
 % 这里增加内容
-\ifdefined\addtitletoproblemtoc
+\ifdefined\ProblemIndex
   \addtitletoproblemtoc{\ProblemIndex}{#1}
 \fi
 ```
@@ -2151,7 +2153,7 @@ xelatex -synctex=1 -interaction=nonstopmode statements.tex
 
 ![](./img/auto_toc.png)
 
-完整示例可以参照 [这个仓库](https://github.com/fy-hb/polygon-chinese-template)。
+完整的 `statements.ftl` 以及 `olymp.sty` 文件可以参照 [这个仓库](https://github.com/fy-hb/polygon-chinese-template)。
 
 ## 若干题面 pdf 构建失败原因
 
