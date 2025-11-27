@@ -2162,6 +2162,40 @@ xelatex -synctex=1 -interaction=nonstopmode statements.tex
 
 完整的 `statements.ftl` 以及 `olymp.sty` 文件可以参照 [这个仓库](https://github.com/fy-hb/polygon-chinese-template)。
 
+### 在单个题目以及比赛中使用同一份 statements.ftl 文件
+
+如果你的 ```statements.ftl``` 经过了一堆的修改，加上了很多比赛封面相关的东西，这样一来，对于单个题目来说，这份 ```statements.ftl``` 显然就不能直接用了，需要删去封面相关的部分才行。
+
+如果你希望在单个题目以及比赛中使用同一份 ```statements.ftl``` 文件，可以采用如下办法。
+
+```tex
+
+\newif\ifmultistatements
+
+\begin {document}
+
+<#list statements as statement>
+<#if statement.path??>
+\multistatementstrue
+</#if>
+</#list>
+
+\ifmultistatements
+
+% 这里是比赛封面相关的东西
+
+\fi
+
+% 其他部分保持不变
+
+```
+
+首先新建一个叫做 ```multistatements``` 的开关。
+
+之后，借助 FreeMarker 模板，遍历所有需要构建的题面，如果 ```statement.path``` 存在，意味着此时是构建比赛题面而不是单个题目的题面，将 ```multistatements``` 开关设为 ```true```。
+
+之后，将所有构建封面相关的语句放在 ```\ifmultistatements``` 以及 ```\fi``` 中间，这样只有当开关为 ```true``` 的时候，才会使用这些语句。
+
 ## 若干题面 pdf 构建失败原因
 
 ### 特殊字符
