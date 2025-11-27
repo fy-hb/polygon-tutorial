@@ -2056,7 +2056,9 @@ xelatex -synctex=1 -interaction=nonstopmode statements.tex
 
 （与之不同的是，我将注册题目标题放在了 `olymp.sty` 的 `problem` 环境定义中，这样可以不用修改每个题的 `problem.tex`）
 
-如果希望自动生成一份比赛题目的 table of contents，可以采用如下方式：
+众所周知的事情是，在 LaTeX 中，我们可以通过 ```\tableofcontents``` 生成一份目录，它将自动包括你所有在正文中定义的 ```\section``` 等各级标题。
+
+如果想要在封面上放上一份自动生成的 table of contents，可以采用如下方式：
 
 在 ```statements.ftl``` 的导言区或者是 `olymp.sty` 的内部添加如下内容：
 
@@ -2088,10 +2090,13 @@ xelatex -synctex=1 -interaction=nonstopmode statements.tex
 
 （在 `olymp.sty` 内部添加记得去掉 `makeatletter` 以及 `makeatother`）
 
-- 首先需要在每题开始的地方调用 ```\addtitletoproblemtoc``` 命令。
-- 之后，在标题页的对应位置添加 ```\makeproblemtoc``` 命令即可。
+这里有两个命令。```\addtitletoproblemtoc``` 的作用是将注册一个题目的编号以及标题。
 
-关于第一点，我们可以通过对 ```olymp.sty``` 进行修改从而实现。
+```\makeproblemtoc``` 的作用是根据所有注册过的题目，生成目录。
+
+所以我们需要对每个题都调用一次 ```\addtitletoproblemtoc```。
+
+关于这一点，我们可以通过对 ```olymp.sty``` 进行修改从而实现。
 
 ```tex
 \newenvironment{@problem}[6]{
@@ -2105,7 +2110,9 @@ xelatex -synctex=1 -interaction=nonstopmode statements.tex
 \fi
 ```
 
-示例：
+这样一来，由于每道题目都会调用 `problem` 环境，这样就能够自动完成题目信息的注册。
+
+之后，为我们在比赛的 `statements.ftl` 中调用 ```\makeproblemtoc``` 即可。示例如下：
 
 ```tex
 \begin {document}
