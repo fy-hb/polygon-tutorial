@@ -1409,6 +1409,8 @@ Renumerate problems 可以对题目重新进行编号。
 
 Properties/Files 可以编辑题目的题面模板文件（`olymp.sty`、`statements.ftl` 等，具体作用下一节会讲）。除此之外，编辑比赛的标题/时间/地点，也是在此处。找到对应文件旁边的 Edit 即可编辑。
 
+需要注意的是，侧边栏有两行 ```Build XXXXX packages (+verify)```，作用是同时构建比赛中所有题目的包。记得点击旁边的 ```+verify``` 而不是 ```Build XXXXX packages```。否则 Polygon 只会给你构建没有经过 Verification 的包。
+
 ![](img/contest_properties_and_files.png)
 
 有关比赛/题目集的内容不多。各位自行摸索一下即可。
