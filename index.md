@@ -446,6 +446,14 @@ int main(int argc, char *argv[]) {
 
 最后的“数据编号”指的是，该命令用于生成的是第几组数据。比如生成第 $$13$$ 组数据的话就是 ```> 13```。使用 ```> $``` 表示自动顺延编号。
 
+对于需要用到不止一个 Generator 的情况，建议给每个 Generator 都设置一个合理的名字。
+
+不建议使用 `gen1`、`gen2` 这种命名，否则过一段时间你就会忘了它是做什么的。
+
+[Codeforces Authors' Polygon Rules](https://codeforces.com/r/authors-polygon-rules) 推荐我们使用 `gen_path`、`gen_binary` 等意义明确的名称。
+
+![](img/generator_name_suggest.png)
+
 ### 预览测试数据
 
 当你完成了：
@@ -456,14 +464,6 @@ int main(int argc, char *argv[]) {
 你就可以在 Preview Tests 页面，看到我们添加的数据。
 
 ![](img/preview_tests.png)
-
-对于需要用到不止一个 Generator 的情况，建议给每个 Generator 都设置一个合理的名字。
-
-不建议使用 `gen1`、`gen2` 这种命名，否则过一段时间你就会忘了它是做什么的。
-
-[Codeforces Authors' Polygon Rules](https://codeforces.com/r/authors-polygon-rules) 推荐我们使用 `gen_path`、`gen_binary` 等意义明确的名称。
-
-![](img/generator_name_suggest.png)
 
 ## Validator：要确保输入数据不出锅，请务必尊重
 
@@ -596,7 +596,7 @@ int main(int argc, char *argv[]) {
 
 其次也是方便 testlib 在错误信息中进行展示出错位置。
 
-比如以下这组数据，你会发现第二个测试用例的 $$n$$ 显然不符合范围。
+比如以下这组数据，你会发现第二个测试用例的 $n$ 显然不符合范围。
 
 ```text
 2
@@ -722,27 +722,70 @@ Polygon 为我们提供了很多许多人性化的 Checker。
 
 ![](img/set_checker.png)
 
-先介绍几个最常用的 Checker。
+以下是 Polygon 中最常用的几种 Checker：
 
-- `std::ncmp.cpp`：适用于输出是**多个 long long 范围内整数**（$$-2^{63} \sim 2^{63} - 1$$）的情况，忽略所有不可见字符的情况下，判断选手程序输出的各个整数是否和 std 相等。
-- `std::nyesno.cpp`：适用于输出是**多个 `YES` / `NO`** 的情况，在忽略大小写的情况下，判断选手程序输出的各个 `YES` / `NO` 是否和 std 相等。例如 `yeS` 会被认为和 `YES` 相等。
-- `std::rcmp4.cpp` / `std::rcmp6.cpp` / `std::rcmp9.cpp`：适用于输出是**多个浮点数**的情况，在相对误差 $$10^{-4}$$ / $$10^{-6}$$ / $$10^{-9}$$ 的情况下判断选手程序输出是否和 std 相等。
-- `std::wcmp.cpp` 在忽略所有不可见字符，把输出当成「用不可见字符分隔的若干个字符串」的情况下，判断选手输出与 std 是否相等。
+- `std::ncmp.cpp`:
 
-以及不一定常用的：
+  - 适用于输出由多个 `long long` 范围内整数（$$-2^{63} \sim 2^{63}-1$$）组成的情况。
 
-- `std::fcmp.cpp`：需要选手输出与 std 输出完全相等，包括所有的不可见字符。这很丧心病狂。
-- `std::hcmp.cpp`：适用于输出是**单个高精度整数**的情况，可以检测出前导 0 等格式问题。
-- `std::lcmp.cpp`：在忽略多余空格与文件末尾的多余 ```\n``` 的情况下，判断选手程序输出的每一行是否和 std 输出相等。
-- `std::yesno.cpp`：判断**单个 `YES` / `NO`**，忽略大小写。个人认为意义不明。
+  - Checker 会将输出视为一个整数序列，逐个比较对应整数，并要求序列内容和长度均与标准答案完全一致。
 
-对于输出是一堆 long long 范围内整数的情况，我们直接选择 `std::ncmp.cpp` 即可。
+- `std::wcmp.cpp`
 
-顺带一题，[Codeforces Authors' Polygon Rules](https://codeforces.com/r/authors-polygon-rules) 推荐在可能的情况下，优先选择 `std::ncmp.cpp`、`std::nyesno.cpp` 以及 `std::wcmp.cpp`。
+  - 适用于输出由多个 Token（以空白字符分隔的字符串）组成的情况。
+
+  - Checker 会忽略空白字符（空格、换行、Tab 等）的具体形式，仅比较 Token 序列是否一致。
+
+- `std::nyesno.cpp`
+
+  - 适用于输出包含多个 `YES` / `NO` 的情况。
+
+  - Checker 在忽略大小写的前提下比较对应答案，例如 `YES`、`Yes`、`yeS` 均被视为相同。
+
+- `std::rcmp4.cpp` / `std::rcmp6.cpp` / `std::rcmp9.cpp`**
+
+  - 适用于输出包含多个浮点数的情况。
+
+  - 分别以相对误差 $$10^{-4}$$、$$10^{-6}$$、$$10^{-9}$$ 作为判定标准。
+
+以下是部分情况下可能有用的 Checker，但总的来说不太常用：
+
+- `std::lcmp.cpp`
+
+  - 按行比较输出内容。
+
+  - 每行内部会忽略多余空格，文件末尾额外的换行也会被忽略，但行结构必须保持一致。
+
+- `std::fcmp.cpp`
+
+  - 要求选手输出与标准答案逐字符完全一致，包括所有空格和换行。
+
+- `std::hcmp.cpp`
+
+  - 适用于输出为单个高精度整数的情况，可检测前导零等格式错误。
+
+- `std::yesno.cpp`
+
+  - 适用于输出为单个 `YES` / `NO` 的情况，并忽略大小写。
+
+
+对于输出为整数序列的大多数题目，直接使用 `std::ncmp.cpp` 即可。
+
+顺带一题，[Codeforces Authors' Polygon Rules](https://codeforces.com/r/authors-polygon-rules) 也建议在满足需求的情况下优先使用：
+
+- `std::ncmp.cpp`
+- `std::nyesno.cpp`
+- `std::wcmp.cpp`
+
+原因是这些 Checker 的行为简单明确，不容易因为格式问题产生意料之外的判定结果。
 
 ![](img/cf_polygon_rules_checker.png)
 
 然后补充说明一下 `std::wcmp.cpp` 以及 `std::lcmp.cpp` 的一些异同点（以下使用 `␣` 符号表示空格，`↵` 符号表示 ```\n```）：
+
+总结来看，`std::wcmp.cpp` 关注的是 Token 序列，而 `std::lcmp.cpp` 关注的是行结构。
+
+如果不太理解的话，可以看一下后面的这些例子。
 
 以下两种输出，`std::wcmp.cpp` 会认为它们**相等**，`std::lcmp.cpp` 也会认为它们**相等**。
 
@@ -1288,7 +1331,7 @@ Polygon 还会去检验你的 Checker 是否会在奇怪刁钻输出上出错。
 
 ### Standard Package
 
-当打包完成后，显示页面会显示打包是否成功，是否有警告信息，如果失败的话原因是什么。
+当打包完成后，页面会显示打包是否成功，是否有警告信息，如果失败的话原因是什么。
 
 上面提到，此处一共有三种 Package。第一种是 Standard Package。
 
