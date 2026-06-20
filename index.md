@@ -742,7 +742,7 @@ Polygon 为我们提供了很多许多人性化的 Checker。
 
   - Checker 在忽略大小写的前提下比较对应答案，例如 `YES`、`Yes`、`yeS` 均被视为相同。
 
-- `std::rcmp4.cpp` / `std::rcmp6.cpp` / `std::rcmp9.cpp`**
+- `std::rcmp4.cpp` / `std::rcmp6.cpp` / `std::rcmp9.cpp`
 
   - 适用于输出包含多个浮点数的情况。
 
